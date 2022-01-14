@@ -11,61 +11,108 @@ function computerPlay() {
     }
 }
 
-function game(playerSelection, computerSelection){
+function game(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) { 
-        alert(`Computer chose ${computerSelection}. It's a tie! Score is COMPUTER: ${computerScore} YOU: ${playerScore}`)
+        return 0                                  
     }
 
     if (playerSelection == "rock"){
         if (computerSelection == "paper"){
-            computerScore++
-            alert(`Computer chose ${computerSelection}. You lose! Score is COMPUTER: ${computerScore} YOU: ${playerScore}`)
-        
+            return 1                              
         }
         else if (computerSelection == "scissors"){
-            playerScore++
-            alert(`Computer chose ${computerSelection}. You win! Score is COMPUTER: ${computerScore} YOU: ${playerScore}`)
+          return -1           
         }
     }
 
     if (playerSelection == "paper"){
         if (computerSelection == "scissors"){
-            computerScore++
-            alert(`Computer chose ${computerSelection}. You lose! Score is COMPUTER: ${computerScore} YOU: ${playerScore}`)  
+           return 1
         }
         else if (computerSelection == "rock"){
-            playerScore++
-            alert(`Computer chose ${computerSelection}. You win! Score is COMPUTER: ${computerScore} YOU: ${playerScore}`)
+            return -1
+            
         }
     }
 
     if (playerSelection == "scissors"){
         if (computerSelection == "rock"){
-            computerScore++
-            alert(`Computer chose ${computerSelection}. You lose! Score is COMPUTER: ${computerScore} YOU: ${playerScore}`)
+            return 1    
         }
         else if (computerSelection == "paper"){
-            playerScore++
-            alert(`Computer chose ${computerSelection}. You win! Score is COMPUTER: ${computerScore} YOU: ${playerScore}`)
+            return -1   
         }
     }
 }
 
-let playerScore = 0
-let computerScore = 0
-for (let i = 1; i <=5; i++){
-    let playerSelection = prompt("Let's play rock-paper-scissors! Insert your choice below")   
-    playerSelection = playerSelection.toLowerCase()
+function playRound (userChoice){
+    let playerSelection = userChoice
+    console.log(playerSelection)
     let computerSelection = computerPlay()
-    game(playerSelection, computerSelection)
+    let res = game(playerSelection, computerSelection)
+    if (res == -1){
+        playerScore++
+    }else if (res == 1){
+        computerScore ++
+    }
+    scoreDiv.textContent = `Computer chose ${computerSelection}. Score is COMPUTER: ${computerScore} YOU: ${playerScore}`
+    if ((playerScore == 5) || (computerScore == 5)){
+        finish (playerScore, computerScore)
+        
+    }
+
+}
+function finish(playerScore, computerScore) {
+    
+    if (playerScore > computerScore){
+        resultDiv.textContent = 'Yayy!! You won'  
+    }
+    else if (playerScore < computerScore){
+        resultDiv.textContent =  'Ow :( you lost'
+    }
+    else {
+        resultDiv.textContent = 'It\s a tie'
+    }
+    resultDiv.style.visibility = 'visible'
+    tryAgainButton.style.visibility = 'visible'
+    disableButtons()
+
+}
+function reset() {
+    
+    playerScore = 0
+    computerScore = 0
+    tryAgainButton.style.visibility = 'hidden'
+    resultDiv.style.visibility = 'hidden'
+    scoreDiv.textContent = ''
+    enableButtons()
+    
 }
 
-if (playerScore > computerScore){
-    alert("YOU WIN! Congratulations!")
+function enableButtons (){
+    playButtons.forEach((button) => {
+        button.disabled = false
+    })
 }
-else if (playerScore < computerScore){
-    alert("You lost! Better luck next time")
+ function disableButtons () {
+     playButtons.forEach((button) => {
+         button.disabled = true
+     })
 }
-else {
-    alert("It's a tie!")
-}
+
+let playerScore = 0
+let computerScore = 0
+let resultDiv = document.getElementById('result')
+resultDiv.textContent = ''
+resultDiv.style.visibility = 'hidden'
+let tryAgainButton = document.getElementById('again')
+tryAgainButton.style.visibility = 'hidden'
+let scoreDiv = document.querySelector('div')
+let playButtons = document.querySelectorAll('.selection')
+playButtons.forEach((button) => {
+    button.addEventListener('click', () => playRound(button.value))
+})
+tryAgainButton.addEventListener('click', reset)
+    
+
+
