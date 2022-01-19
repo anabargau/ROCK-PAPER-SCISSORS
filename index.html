@@ -3,15 +3,23 @@
     <head>
         <meta charset="UTF-8">
         <title>Rock-Paper-Scissors</title>
-        
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="javascript.js" defer></script>    
     </head>
     <body>
-      <button class = 'selection' value = 'paper' id = 'button1'> paper </button>
-      <button class = 'selection' value = 'scissors' id = 'button2'> scissors </button>
-      <button class = 'selection' value= 'rock' id = 'button3'> rock </button>  
-      <div></div>
-      <div id = 'result'></div>
-      <button id = 'again'>Try again!</button>
-      <script type="text/javascript" src="javascript.js"></script>
+     <div class="flex-container">
+       <div class="computer">
+         <img src="available.jpeg">
+         <div class="name">Doris</div>
+       </div>
+       <div class="messages-container">
+         <div class="typing"></div>
+       </div>
+       <form class="user-input" name="user-input">
+         <input type="text" placeholder="Type here..." class="user-message">
+         <button type="submit" class="send"><img src="send.png" class="image"></button>
+       <form>
+     </div>
+      
     </body>
 </html>
